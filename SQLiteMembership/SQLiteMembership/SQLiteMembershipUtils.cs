@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Data;
-using System.Data.Common;
 using System.Data.SQLite;
 
 namespace SQLiteMembership
 {
-    public class SQLiteMembershipUtils
+    static class SQLiteMembershipUtils
     {
         private static readonly object SyncObject = new object();
 
@@ -28,14 +27,14 @@ namespace SQLiteMembership
 
         public static string GetApplicationId(string connectionString, string applicationName)
         {
-            using (var con = GetConnection(connectionString))
+            using (var con = SQLiteUtils.GetConnection(connectionString))
             {
                 con.Open();
 
                 using (var cmd = con.CreateCommand())
                 {
                     cmd.CommandText = "SELECT [ApplictionId] FROM [aspnet_Applications] WHERE [ApplicationName]=@ApplicationName";
-                    cmd.Parameters.Add(GetParameter("@ApplicationName", applicationName));
+                    cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationName", applicationName));
 
                     var applicationId = cmd.ExecuteScalar();
 
@@ -73,7 +72,7 @@ namespace SQLiteMembership
 
         private static void ValidateDatabase(string connectionString, string applicationName)
         {
-            using (var con = GetConnection(connectionString))
+            using (var con = SQLiteUtils.GetConnection(connectionString))
             {
                 con.Open();
 
@@ -86,16 +85,6 @@ namespace SQLiteMembership
                     CreateProfile(cmd);
                 }
             }
-        }
-
-        private static DbConnection GetConnection(string connectionString)
-        {
-            return new SQLiteConnection(connectionString);
-        }
-
-        private static DbParameter GetParameter(string parameterName, object value)
-        {
-            return new SQLiteParameter(parameterName, value);
         }
 
         private static void CreateApplications(IDbCommand cmd, string applicationName)
@@ -125,9 +114,9 @@ namespace SQLiteMembership
                                             @LoweredApplicationName,
                                             @ApplicationId
                                         );";
-            cmd.Parameters.Add(GetParameter("@ApplicationName", applicationName));
-            cmd.Parameters.Add(GetParameter("@LoweredApplicationName", applicationName.ToLowerInvariant()));
-            cmd.Parameters.Add(GetParameter("@ApplicationId", Guid.NewGuid().ToString()));
+            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationName", applicationName));
+            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@LoweredApplicationName", applicationName.ToLowerInvariant()));
+            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationId", Guid.NewGuid().ToString()));
             cmd.ExecuteNonQuery();
         }
 
