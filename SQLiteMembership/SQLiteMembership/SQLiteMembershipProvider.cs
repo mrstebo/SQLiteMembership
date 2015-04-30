@@ -1464,8 +1464,8 @@ namespace SQLiteMembership
                                           "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@UserName", userName)
+                            SQLiteUtils.CreateParameter("@UserName", userName),
+                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
                         });
                             
                         return cmd.ExecuteScalar() as string;
