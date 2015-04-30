@@ -66,9 +66,9 @@ namespace SQLiteMembership
                                           "WHERE [aspnet_UsersInRoles].UserId = [aspnet_Users].UserId AND [aspnet_UsersInRoles].RoleId = aspnet_Roles.RoleId AND [aspnet_Users].UserName = @UserName AND [aspnet_Roles].RoleName = @RoleName";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@UserName", username),
-                            SQLiteUtils.CreateParameter("@RoleName", roleName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserName", username),
+                            cmd.CreateParameter("@RoleName", roleName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         userIsInRole = (int) cmd.ExecuteScalar() > 0;                           
@@ -103,8 +103,8 @@ namespace SQLiteMembership
                                           "ORDER BY RoleName";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -147,9 +147,9 @@ namespace SQLiteMembership
                                           "@Rolename, @LoweredRoleName, @ApplicationId)";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@RoleName", roleName),
-                            SQLiteUtils.CreateParameter("@LoweredRoleName", roleName.ToLowerInvariant()),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@RoleName", roleName),
+                            cmd.CreateParameter("@LoweredRoleName", roleName.ToLowerInvariant()),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         cmd.ExecuteNonQuery();
@@ -184,7 +184,7 @@ namespace SQLiteMembership
                         {
                             cmd.CommandText = "DELETE FROM [aspnet_UsersInRoles] " +
                                               "WHERE RoleId = @RoleId";
-                            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@RoleId", roleId));
+                            cmd.Parameters.Add(cmd.CreateParameter("@RoleId", roleId));
 
                             cmd.ExecuteNonQuery();
                         }
@@ -195,8 +195,8 @@ namespace SQLiteMembership
                                               "WHERE RoleId = @RoleId AND ApplicationId = @ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
-                                SQLiteUtils.CreateParameter("@RoleId", roleId),
-                                SQLiteUtils.CreateParameter("@AppliationId", _applicationId)
+                                cmd.CreateParameter("@RoleId", roleId),
+                                cmd.CreateParameter("@AppliationId", _applicationId)
                             });
 
                             cmd.ExecuteNonQuery();
@@ -234,8 +234,8 @@ namespace SQLiteMembership
                                           "WHERE RoleName = @RoleName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@RoleName", roleName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@RoleName", roleName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         roleExists = (int) cmd.ExecuteScalar() > 0;
@@ -289,8 +289,8 @@ namespace SQLiteMembership
 
                                     cmd.Parameters.AddRange(new []
                                     {
-                                        SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                                        SQLiteUtils.CreateParameter("@RoleId", GetRoleId(roleName))
+                                        cmd.CreateParameter("@UserId", GetUserId(username)),
+                                        cmd.CreateParameter("@RoleId", GetRoleId(roleName))
                                     });
 
                                     cmd.ExecuteNonQuery();
@@ -338,8 +338,8 @@ namespace SQLiteMembership
 
                                     cmd.Parameters.AddRange(new[]
                                     {
-                                        SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                                        SQLiteUtils.CreateParameter("@RoleId", GetRoleId(roleName))
+                                        cmd.CreateParameter("@UserId", GetUserId(username)),
+                                        cmd.CreateParameter("@RoleId", GetRoleId(roleName))
                                     });
 
                                     cmd.ExecuteNonQuery();
@@ -377,8 +377,8 @@ namespace SQLiteMembership
                                           "ORDER BY u.UserName";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@RoleId", GetRoleId(roleName)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@RoleId", GetRoleId(roleName)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -416,7 +416,7 @@ namespace SQLiteMembership
                         cmd.CommandText = "SELECT RoleName " +
                                           "FROM [aspnet_Roles] " +
                                           "WHERE ApplicationId = @ApplicationId";
-                        cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationId", _applicationId));
+                        cmd.Parameters.Add(cmd.CreateParameter("@ApplicationId", _applicationId));
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -455,9 +455,9 @@ namespace SQLiteMembership
                                           "WHERE u.UserName LIKE @UserNameSearch AND ur.RoleName = @RoleName AND u.ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@UserNameSearch", usernameToMatch),
-                            SQLiteUtils.CreateParameter("@RoleName", roleName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserNameSearch", usernameToMatch),
+                            cmd.CreateParameter("@RoleName", roleName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -495,8 +495,8 @@ namespace SQLiteMembership
                                           "WHERE LOWER(@RoleName) = LoweredRoleName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@RoleName", roleName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@RoleName", roleName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         return cmd.ExecuteScalar() as string;
@@ -528,8 +528,8 @@ namespace SQLiteMembership
                                           "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserName", userName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserName", userName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         return cmd.ExecuteScalar() as string;

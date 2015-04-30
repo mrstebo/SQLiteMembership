@@ -178,10 +178,10 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@Password", EncodePassword(newPassword, salt)),
-                            SQLiteUtils.CreateParameter("@LastPasswordChangedDate", DateTime.UtcNow),
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Password", EncodePassword(newPassword, salt)),
+                            cmd.CreateParameter("@LastPasswordChangedDate", DateTime.UtcNow),
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         rowsAffected = cmd.ExecuteNonQuery();
@@ -223,10 +223,10 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@Question", newPasswordQuestion),
-                            SQLiteUtils.CreateParameter("@Answer", EncodePassword(newPasswordAnswer, salt)),
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Question", newPasswordQuestion),
+                            cmd.CreateParameter("@Answer", EncodePassword(newPasswordAnswer, salt)),
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         rowsAffected = cmd.ExecuteNonQuery();
@@ -321,12 +321,12 @@ namespace SQLiteMembership
                                                 )";
                             cmd.Parameters.AddRange(new[]
                             {
-                                SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                                SQLiteUtils.CreateParameter("@UserId", providerUserKey),
-                                SQLiteUtils.CreateParameter("@UserName", username),
-                                SQLiteUtils.CreateParameter("@LoweredUserName", username.ToLowerInvariant()),
-                                SQLiteUtils.CreateParameter("@IsAnonymous", false),
-                                SQLiteUtils.CreateParameter("@LastActivityDate", createDate)
+                                cmd.CreateParameter("@ApplicationId", _applicationId),
+                                cmd.CreateParameter("@UserId", providerUserKey),
+                                cmd.CreateParameter("@UserName", username),
+                                cmd.CreateParameter("@LoweredUserName", username.ToLowerInvariant()),
+                                cmd.CreateParameter("@IsAnonymous", false),
+                                cmd.CreateParameter("@LastActivityDate", createDate)
                             });
 
                             userRowsAffected = cmd.ExecuteNonQuery();
@@ -379,26 +379,26 @@ namespace SQLiteMembership
                                                 )";
                             cmd.Parameters.AddRange(new[]
                             {
-                                SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                                SQLiteUtils.CreateParameter("@UserId", providerUserKey),
-                                SQLiteUtils.CreateParameter("@Password", EncodePassword(password, salt)),
-                                SQLiteUtils.CreateParameter("@PasswordFormat", PasswordFormat.GetHashCode()),
-                                SQLiteUtils.CreateParameter("@PasswordSalt", salt),
-                                SQLiteUtils.CreateParameter("@Email", email ?? ""),
-                                SQLiteUtils.CreateParameter("@LoweredEmail", (email ?? "").ToLowerInvariant()),
-                                SQLiteUtils.CreateParameter("@PasswordQuestion", passwordQuestion),
-                                SQLiteUtils.CreateParameter("@PasswordAnswer", EncodePassword(passwordAnswer, salt)),
-                                SQLiteUtils.CreateParameter("@IsApproved", isApproved),
-                                SQLiteUtils.CreateParameter("@IsLockedOut", false),
-                                SQLiteUtils.CreateParameter("@CreateDate", createDate),
-                                SQLiteUtils.CreateParameter("@LastLoginDate", createDate),
-                                SQLiteUtils.CreateParameter("@LastPasswordChangedDate", createDate),
-                                SQLiteUtils.CreateParameter("@LastLockoutDate", DateTime.MinValue),
-                                SQLiteUtils.CreateParameter("@FailedPasswordAttemptCount", 0),
-                                SQLiteUtils.CreateParameter("@FailedPasswordAttemptWindowStart", DateTime.MinValue),
-                                SQLiteUtils.CreateParameter("@FailedPasswordAnswerAttemptCount", 0),
-                                SQLiteUtils.CreateParameter("@FailedPasswordAnswerAttemptWindowStart", DateTime.MinValue),
-                                SQLiteUtils.CreateParameter("@Comment", "")
+                                cmd.CreateParameter("@ApplicationId", _applicationId),
+                                cmd.CreateParameter("@UserId", providerUserKey),
+                                cmd.CreateParameter("@Password", EncodePassword(password, salt)),
+                                cmd.CreateParameter("@PasswordFormat", PasswordFormat.GetHashCode()),
+                                cmd.CreateParameter("@PasswordSalt", salt),
+                                cmd.CreateParameter("@Email", email ?? ""),
+                                cmd.CreateParameter("@LoweredEmail", (email ?? "").ToLowerInvariant()),
+                                cmd.CreateParameter("@PasswordQuestion", passwordQuestion),
+                                cmd.CreateParameter("@PasswordAnswer", EncodePassword(passwordAnswer, salt)),
+                                cmd.CreateParameter("@IsApproved", isApproved),
+                                cmd.CreateParameter("@IsLockedOut", false),
+                                cmd.CreateParameter("@CreateDate", createDate),
+                                cmd.CreateParameter("@LastLoginDate", createDate),
+                                cmd.CreateParameter("@LastPasswordChangedDate", createDate),
+                                cmd.CreateParameter("@LastLockoutDate", DateTime.MinValue),
+                                cmd.CreateParameter("@FailedPasswordAttemptCount", 0),
+                                cmd.CreateParameter("@FailedPasswordAttemptWindowStart", DateTime.MinValue),
+                                cmd.CreateParameter("@FailedPasswordAnswerAttemptCount", 0),
+                                cmd.CreateParameter("@FailedPasswordAnswerAttemptWindowStart", DateTime.MinValue),
+                                cmd.CreateParameter("@Comment", "")
                             });
 
                             membershipRowsAffected = cmd.ExecuteNonQuery();
@@ -438,8 +438,6 @@ namespace SQLiteMembership
             try
             {
                 var userId = GetUserId(username);
-                var userParameter = SQLiteUtils.CreateParameter("@UserId", userId);
-                var applicationParameter = SQLiteUtils.CreateParameter("@ApplicationId", _applicationId);
 
                 using (var con = SQLiteUtils.GetConnection(_connectionString))
                 {
@@ -453,8 +451,8 @@ namespace SQLiteMembership
                                               "WHERE UserId = @UserId AND @ApplicationId = @ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
-                                userParameter,
-                                applicationParameter
+                                cmd.CreateParameter("@UserId", userId),
+                                cmd.CreateParameter("@ApplicationId", _applicationId)
                             });
 
                             rowsAffected += cmd.ExecuteNonQuery();
@@ -466,8 +464,8 @@ namespace SQLiteMembership
                                               "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
-                                userParameter,
-                                applicationParameter
+                                cmd.CreateParameter("@UserId", userId),
+                                cmd.CreateParameter("@ApplicationId", _applicationId)
                             });
 
                             rowsAffected += cmd.ExecuteNonQuery();
@@ -478,7 +476,7 @@ namespace SQLiteMembership
                             using (var cmd = con.CreateCommand())
                             {
                                 cmd.CommandText = "DELETE FROM aspnet_Profile WHERE UserId = @userId";
-                                cmd.Parameters.Add(userParameter);
+                                cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
                                 rowsAffected += cmd.ExecuteNonQuery();
                             }
@@ -490,8 +488,8 @@ namespace SQLiteMembership
                                               "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
-                                userParameter,
-                                applicationParameter
+                                cmd.CreateParameter("@UserId", userId),
+                                cmd.CreateParameter("@ApplicationId", _applicationId)
                             });
 
                             rowsAffected += cmd.ExecuteNonQuery();
@@ -530,8 +528,8 @@ namespace SQLiteMembership
                                           "WHERE Email LIKE @EmailSearch AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@EmailSearch", emailToMatch),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@EmailSearch", emailToMatch),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         totalRecords = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
@@ -552,10 +550,10 @@ namespace SQLiteMembership
                             " ORDER BY [aspnet_Users].Username Asc LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@EmailSearch", emailToMatch),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize) 
+                            cmd.CreateParameter("@EmailSearch", emailToMatch),
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize) 
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -597,8 +595,8 @@ namespace SQLiteMembership
                                           "WHERE Email LIKE @UsernameSearch AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UsernameSearch", usernameToMatch),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UsernameSearch", usernameToMatch),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         totalRecords = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
@@ -620,10 +618,10 @@ namespace SQLiteMembership
 
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UsernameSearch", usernameToMatch),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@UsernameSearch", usernameToMatch),
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -663,7 +661,7 @@ namespace SQLiteMembership
                     {
                         cmd.CommandText = "SELECT Count(*) FROM [aspnet_Membership] " +
                                           "WHERE ApplicationId = @ApplicationId";
-                        cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationId", _applicationId));
+                        cmd.Parameters.Add(cmd.CreateParameter("@ApplicationId", _applicationId));
 
                         totalRecords = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
 
@@ -683,9 +681,9 @@ namespace SQLiteMembership
 
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -729,8 +727,8 @@ namespace SQLiteMembership
                                           "WHERE LastActivityDate > @CompareDate AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@CompareDate", compareTime),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@CompareDate", compareTime),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         numUsersOnline = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
@@ -776,8 +774,8 @@ namespace SQLiteMembership
                             "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SingleRow))
@@ -837,8 +835,8 @@ namespace SQLiteMembership
                                           "WHERE Username = @Username AND [aspnet_Membership].ApplicationId = @ApplicationId AND [aspnet_Membership].UserId = [aspnet_Users].UserId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@Username", username),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Username", username),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -862,9 +860,9 @@ namespace SQLiteMembership
                                               "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                             cmd.Parameters.AddRange(new []
                             {
-                                SQLiteUtils.CreateParameter("@LastActivityDate", DateTime.UtcNow),
-                                SQLiteUtils.CreateParameter("@UserId", membershipUser.ProviderUserKey),
-                                SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                                cmd.CreateParameter("@LastActivityDate", DateTime.UtcNow),
+                                cmd.CreateParameter("@UserId", membershipUser.ProviderUserKey),
+                                cmd.CreateParameter("@ApplicationId", _applicationId)
                             });
 
                             cmd.ExecuteNonQuery();
@@ -902,7 +900,7 @@ namespace SQLiteMembership
                                           "LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
                                           "FROM [aspnet_Membership], [aspnet_Users] " +
                                           "WHERE [aspnet_Membership].UserId = @UserId AND [aspnet_Membership].UserId = [aspnet_Users].UserId";
-                        cmd.Parameters.Add(SQLiteUtils.CreateParameter("@UserId", providerUserKey));
+                        cmd.Parameters.Add(cmd.CreateParameter("@UserId", providerUserKey));
                         
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -922,8 +920,8 @@ namespace SQLiteMembership
                                               "WHERE UserId = @UserId";
                             cmd.Parameters.AddRange(new []
                             {
-                                SQLiteUtils.CreateParameter("@LastActivityDate", DateTime.UtcNow),
-                                SQLiteUtils.CreateParameter("@UserId", providerUserKey)
+                                cmd.CreateParameter("@LastActivityDate", DateTime.UtcNow),
+                                cmd.CreateParameter("@UserId", providerUserKey)
                             });
                             
                             cmd.ExecuteNonQuery();
@@ -964,8 +962,8 @@ namespace SQLiteMembership
                                           "WHERE Email = @Email AND [aspnet_Membership].ApplicationId = @ApplicationId AND [aspnet_Membership].UserId = [aspnet_Users].UserId ";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@Email", email),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Email", email),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         var result = cmd.ExecuteScalar();
@@ -1026,8 +1024,8 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SingleRow))
@@ -1056,10 +1054,10 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId AND IsLockedOut = 0";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@Password", EncodePassword(newPassword, salt)),
-                            SQLiteUtils.CreateParameter("@LastPasswordChangedDate", DateTime.UtcNow),
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(username)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Password", EncodePassword(newPassword, salt)),
+                            cmd.CreateParameter("@LastPasswordChangedDate", DateTime.UtcNow),
+                            cmd.CreateParameter("@UserId", GetUserId(username)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         if(cmd.ExecuteNonQuery() <= 0)
@@ -1096,9 +1094,9 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@LastLockedOutDate", DateTime.UtcNow),
-                            SQLiteUtils.CreateParameter("@UserId", GetUserId(userName)),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@LastLockedOutDate", DateTime.UtcNow),
+                            cmd.CreateParameter("@UserId", GetUserId(userName)),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         rowsAffected = cmd.ExecuteNonQuery();
@@ -1143,13 +1141,13 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@Email", user.Email),
-                            SQLiteUtils.CreateParameter("@LoweredEmail", (user.Email ?? "").ToLowerInvariant()),
-                            SQLiteUtils.CreateParameter("@Comment", user.Comment),
-                            SQLiteUtils.CreateParameter("@IsApproved", user.IsApproved),
-                            SQLiteUtils.CreateParameter("@UserId", user.ProviderUserKey),
-                            SQLiteUtils.CreateParameter("@LastLoginDate", user.LastLoginDate),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@Email", user.Email),
+                            cmd.CreateParameter("@LoweredEmail", (user.Email ?? "").ToLowerInvariant()),
+                            cmd.CreateParameter("@Comment", user.Comment),
+                            cmd.CreateParameter("@IsApproved", user.IsApproved),
+                            cmd.CreateParameter("@UserId", user.ProviderUserKey),
+                            cmd.CreateParameter("@LastLoginDate", user.LastLoginDate),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         cmd.ExecuteNonQuery();
@@ -1190,8 +1188,8 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId AND IsLockedOut = 0";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserId", userId),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserId", userId),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SingleRow))
@@ -1222,9 +1220,9 @@ namespace SQLiteMembership
                                                   "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                                 cmd.Parameters.AddRange(new []
                                 {
-                                    SQLiteUtils.CreateParameter("@LastLoginDate", DateTime.UtcNow),
-                                    SQLiteUtils.CreateParameter("@UserId", userId),
-                                    SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                                    cmd.CreateParameter("@LastLoginDate", DateTime.UtcNow),
+                                    cmd.CreateParameter("@UserId", userId),
+                                    cmd.CreateParameter("@ApplicationId", _applicationId)
                                 });
 
                                 cmd.ExecuteNonQuery();
@@ -1306,8 +1304,8 @@ namespace SQLiteMembership
                                           "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserId", userId),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserId", userId),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SingleRow))
@@ -1358,10 +1356,10 @@ namespace SQLiteMembership
 
                             cmd.Parameters.AddRange(new[]
                             {
-                                SQLiteUtils.CreateParameter("@Count", 1),
-                                SQLiteUtils.CreateParameter("@WindowStart", DateTime.UtcNow),
-                                SQLiteUtils.CreateParameter("@UserId", userId),
-                                SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                                cmd.CreateParameter("@Count", 1),
+                                cmd.CreateParameter("@WindowStart", DateTime.UtcNow),
+                                cmd.CreateParameter("@UserId", userId),
+                                cmd.CreateParameter("@ApplicationId", _applicationId)
                             });
 
                             if (cmd.ExecuteNonQuery() < 0)
@@ -1380,10 +1378,10 @@ namespace SQLiteMembership
 
                                 cmd.Parameters.AddRange(new[]
                                 {
-                                    SQLiteUtils.CreateParameter("@IsLockedOut", true),
-                                    SQLiteUtils.CreateParameter("@LastLockedOutDate", DateTime.UtcNow),
-                                    SQLiteUtils.CreateParameter("@UserId", userId),
-                                    SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                                    cmd.CreateParameter("@IsLockedOut", true),
+                                    cmd.CreateParameter("@LastLockedOutDate", DateTime.UtcNow),
+                                    cmd.CreateParameter("@UserId", userId),
+                                    cmd.CreateParameter("@ApplicationId", _applicationId)
                                 });
 
                                 if (cmd.ExecuteNonQuery() < 0)
@@ -1407,9 +1405,9 @@ namespace SQLiteMembership
 
                                 cmd.Parameters.AddRange(new []
                                 {
-                                    SQLiteUtils.CreateParameter("@Count", failureCount),
-                                    SQLiteUtils.CreateParameter("@UserId", userId),
-                                    SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                                    cmd.CreateParameter("@Count", failureCount),
+                                    cmd.CreateParameter("@UserId", userId),
+                                    cmd.CreateParameter("@ApplicationId", _applicationId)
                                 });
 
                                 if (cmd.ExecuteNonQuery() < 0)
@@ -1464,8 +1462,8 @@ namespace SQLiteMembership
                                           "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@UserName", userName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserName", userName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
                             
                         return cmd.ExecuteScalar() as string;
@@ -1499,8 +1497,8 @@ namespace SQLiteMembership
                                           "WHERE ApplicationId = @ApplicationId AND UserId = @UserId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@UserId", userId)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@UserId", userId)
                         });
 
                         return cmd.ExecuteScalar() as string;

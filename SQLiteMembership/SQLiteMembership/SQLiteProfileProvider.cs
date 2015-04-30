@@ -121,8 +121,8 @@ namespace SQLiteMembership
                                       "WHERE ApplicationId = @ApplicationId AND LoweredUserName = LOWER(@UserName)";
                     cmd.Parameters.AddRange(new[]
                     {
-                        SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                        SQLiteUtils.CreateParameter("@UserName", username)
+                        cmd.CreateParameter("@ApplicationId", _applicationId),
+                        cmd.CreateParameter("@UserName", username)
                     });
 
                     userCount = (int) cmd.ExecuteScalar();
@@ -152,12 +152,12 @@ namespace SQLiteMembership
                                           "@LastActivityDate)";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@UserId", userId),
-                            SQLiteUtils.CreateParameter("@UserName", username),
-                            SQLiteUtils.CreateParameter("@LoweredUserName", username.ToLowerInvariant()),
-                            SQLiteUtils.CreateParameter("@IsAnonymous", !isAuthenticated),
-                            SQLiteUtils.CreateParameter("@LastActivityDate", DateTime.UtcNow)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@UserId", userId),
+                            cmd.CreateParameter("@UserName", username),
+                            cmd.CreateParameter("@LoweredUserName", username.ToLowerInvariant()),
+                            cmd.CreateParameter("@IsAnonymous", !isAuthenticated),
+                            cmd.CreateParameter("@LastActivityDate", DateTime.UtcNow)
                         });
 
                         cmd.ExecuteNonQuery();
@@ -187,8 +187,8 @@ namespace SQLiteMembership
                                       "WHERE UserId = @UserId";
                     cmd.Parameters.AddRange(new[]
                     {
-                        SQLiteUtils.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
-                        SQLiteUtils.CreateParameter("@UserId", userId)
+                        cmd.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
+                        cmd.CreateParameter("@UserId", userId)
                     });
                 }
 
@@ -199,7 +199,7 @@ namespace SQLiteMembership
                     cmd.CommandText = "SELECT COUNT(UserId) " +
                                       "FROM aspnet_Profile " +
                                       "WHERE UserId = @UserId";
-                    cmd.Parameters.Add(SQLiteUtils.CreateParameter("@UserId", userId));
+                    cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
                     profileCount = (int) cmd.ExecuteScalar();
                 }
@@ -234,11 +234,11 @@ namespace SQLiteMembership
                     }
                     cmd.Parameters.AddRange(new[]
                     {
-                        SQLiteUtils.CreateParameter("@PropertyNames", names),
-                        SQLiteUtils.CreateParameter("@PropertyValuesString", values),
-                        SQLiteUtils.CreateParameter("@PropertyValuesBinary", buffer),
-                        SQLiteUtils.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
-                        SQLiteUtils.CreateParameter("@UserId", userId)
+                        cmd.CreateParameter("@PropertyNames", names),
+                        cmd.CreateParameter("@PropertyValuesString", values),
+                        cmd.CreateParameter("@PropertyValuesBinary", buffer),
+                        cmd.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
+                        cmd.CreateParameter("@UserId", userId)
                     });
 
                     cmd.ExecuteNonQuery();
@@ -292,7 +292,7 @@ namespace SQLiteMembership
                             {
                                 cmd.Parameters.Clear();
 
-                                cmd.Parameters.Add(SQLiteUtils.CreateParameter("@UserId", GetUserId(username)));
+                                cmd.Parameters.Add(cmd.CreateParameter("@UserId", GetUserId(username)));
 
                                 rowsAffected += cmd.ExecuteNonQuery();
                             }
@@ -332,9 +332,9 @@ namespace SQLiteMembership
                                           "WHERE ApplicationId = @ApplicationId AND LastActivityDate <= @InactiveSinceDate AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0))";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime())
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime())
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -356,7 +356,7 @@ namespace SQLiteMembership
                             {
                                 cmd.Parameters.Clear();
 
-                                cmd.Parameters.Add(SQLiteUtils.CreateParameter("@UserId", userId));
+                                cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
                                 rowsAffected += cmd.ExecuteNonQuery();
                             }
@@ -396,9 +396,9 @@ namespace SQLiteMembership
                                           "WHERE ApplicationId = @ApplicationId AND LastActivityDate <= @InactiveSinceDate AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0))";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime())
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime())
                         });
 
                         using (var reader = cmd.ExecuteReader())
@@ -454,10 +454,10 @@ namespace SQLiteMembership
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new []
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
@@ -511,11 +511,11 @@ namespace SQLiteMembership
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime()),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime()),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
@@ -570,11 +570,11 @@ namespace SQLiteMembership
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@UserNameToMatch", usernameToMatch),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@UserNameToMatch", usernameToMatch),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
@@ -629,12 +629,12 @@ namespace SQLiteMembership
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                            SQLiteUtils.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
-                            SQLiteUtils.CreateParameter("@UserNameToMatch", usernameToMatch),
-                            SQLiteUtils.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime()),
-                            SQLiteUtils.CreateParameter("@PageSize", pageSize),
-                            SQLiteUtils.CreateParameter("@PageStart", pageIndex*pageSize)
+                            cmd.CreateParameter("@ApplicationId", _applicationId),
+                            cmd.CreateParameter("@ProfileAuthOptions", (int) authenticationOption),
+                            cmd.CreateParameter("@UserNameToMatch", usernameToMatch),
+                            cmd.CreateParameter("@InactiveSinceDate", userInactiveSinceDate.ToUniversalTime()),
+                            cmd.CreateParameter("@PageSize", pageSize),
+                            cmd.CreateParameter("@PageStart", pageIndex*pageSize)
                         });
 
                         using (var reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
@@ -680,8 +680,8 @@ namespace SQLiteMembership
                                           "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId = @ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
-                            SQLiteUtils.CreateParameter("@UserName", userName),
-                            SQLiteUtils.CreateParameter("@ApplicationId", _applicationId)
+                            cmd.CreateParameter("@UserName", userName),
+                            cmd.CreateParameter("@ApplicationId", _applicationId)
                         });
 
                         return cmd.ExecuteScalar() as string;
@@ -717,8 +717,8 @@ namespace SQLiteMembership
                                       "WHERE ApplicationId = @ApplicationId AND LoweredUserName = LOWER(@UserName)";
                     cmd.Parameters.AddRange(new[]
                     {
-                        SQLiteUtils.CreateParameter("@ApplicationId", _applicationId),
-                        SQLiteUtils.CreateParameter("@UserName", userName)
+                        cmd.CreateParameter("@ApplicationId", _applicationId),
+                        cmd.CreateParameter("@UserName", userName)
                     });
 
                     userId = cmd.ExecuteScalar() as string;
@@ -732,7 +732,7 @@ namespace SQLiteMembership
                     cmd.CommandText = "SELECT PropertyNames, PropertyValuesString, PropertyValuesBinary " +
                                       "FROM aspnet_Profile " +
                                       "WHERE UserId = @UserId";
-                    cmd.Parameters.Add(SQLiteUtils.CreateParameter("@UserId", userId));
+                    cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
                     using (var reader = cmd.ExecuteReader(CommandBehavior.SingleRow))
                     {
@@ -758,8 +758,8 @@ namespace SQLiteMembership
                                       "WHERE UserId = @UserId";
                     cmd.Parameters.AddRange(new[]
                     {
-                        SQLiteUtils.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
-                        SQLiteUtils.CreateParameter("@UserId", userId)
+                        cmd.CreateParameter("@CurrentTimeUtc", DateTime.UtcNow),
+                        cmd.CreateParameter("@UserId", userId)
                     });
 
                     cmd.ExecuteNonQuery();

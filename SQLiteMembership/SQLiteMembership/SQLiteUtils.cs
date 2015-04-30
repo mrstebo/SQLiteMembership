@@ -8,10 +8,5 @@ namespace SQLiteMembership
         {
             return new SQLiteConnection(connectionString);
         }
-
-        public static SQLiteParameter CreateParameter(string parameterName, object value)
-        {
-            return new SQLiteParameter(parameterName, value);
-        }
     }
 }

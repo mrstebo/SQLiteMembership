@@ -34,7 +34,7 @@ namespace SQLiteMembership
                 using (var cmd = con.CreateCommand())
                 {
                     cmd.CommandText = "SELECT [ApplictionId] FROM [aspnet_Applications] WHERE [ApplicationName]=@ApplicationName";
-                    cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationName", applicationName));
+                    cmd.Parameters.Add(cmd.CreateParameter("@ApplicationName", applicationName));
 
                     var applicationId = cmd.ExecuteScalar();
 
@@ -114,9 +114,9 @@ namespace SQLiteMembership
                                             @LoweredApplicationName,
                                             @ApplicationId
                                         );";
-            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationName", applicationName));
-            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@LoweredApplicationName", applicationName.ToLowerInvariant()));
-            cmd.Parameters.Add(SQLiteUtils.CreateParameter("@ApplicationId", Guid.NewGuid().ToString()));
+            cmd.Parameters.Add(cmd.CreateParameter("@ApplicationName", applicationName));
+            cmd.Parameters.Add(cmd.CreateParameter("@LoweredApplicationName", applicationName.ToLowerInvariant()));
+            cmd.Parameters.Add(cmd.CreateParameter("@ApplicationId", Guid.NewGuid().ToString()));
             cmd.ExecuteNonQuery();
         }
 

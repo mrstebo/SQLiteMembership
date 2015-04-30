@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="EventLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DbCommandExtensions.cs" />
     <Compile Include="SQLiteMembershipProvider.cs" />
     <Compile Include="SQLiteMembershipUtils.cs" />
     <Compile Include="SQLiteProfileProvider.cs" />
