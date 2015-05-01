@@ -207,7 +207,7 @@ namespace SQLiteMembership
 
         private static void CreateProfile(IDbCommand cmd)
         {
-            cmd.CommandText = "CREATE TABLE IF NOT EXISTS [user_profiles] (" +
+            cmd.CommandText = "CREATE TABLE IF NOT EXISTS [aspnet_Profile] (" +
                               "[UserId] TEXT PRIMARY KEY NOT NULL," +
                               "[property_names] NTEXT NOT NULL," +
                               "[property_values_string] NTEXT NOT NULL," +
