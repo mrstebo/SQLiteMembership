@@ -33,7 +33,7 @@ namespace SQLiteMembership
 
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT [ApplictionId] " +
+                    cmd.CommandText = "SELECT [ApplicationId] " +
                                       "FROM [aspnet_Applications] " +
                                       "WHERE [ApplicationName]=@ApplicationName";
                     cmd.Parameters.Add(cmd.CreateParameter("@ApplicationName", applicationName));
