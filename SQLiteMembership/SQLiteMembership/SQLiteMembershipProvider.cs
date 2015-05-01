@@ -277,11 +277,11 @@ namespace SQLiteMembership
 
                 if (providerUserKey == null)
                 {
-                    providerUserKey = Guid.NewGuid();
+                    providerUserKey = Guid.NewGuid().ToString();
                 }
                 else
                 {
-                    if (!(providerUserKey is Guid))
+                    if (!(providerUserKey is string))
                     {
                         status = MembershipCreateStatus.InvalidProviderUserKey;
                         return null;
@@ -1246,9 +1246,9 @@ namespace SQLiteMembership
                 return null;
 
             var strGooid = Guid.NewGuid().ToString();
-            var providerUserKey = reader.GetValue(0).ToString().Length > 0 
-                ? new Guid(reader.GetValue(0).ToString()) 
-                : new Guid(strGooid);
+            var providerUserKey = reader.GetString(0).Length > 0 
+                ? reader.GetString(0) 
+                : strGooid;
             var username = reader.GetString(1);
             var email = reader.IsDBNull(2) ? null : reader.GetString(2);
             var passwordQuestion = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
