@@ -174,8 +174,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                          "SET Password = @Password, LastPasswordChangedDate = @LastPasswordChangedDate " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "SET Password=@Password, LastPasswordChangedDate=@LastPasswordChangedDate " +
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@Password", EncodePassword(newPassword, salt)),
@@ -219,8 +219,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                          "SET PasswordQuestion = @Question, PasswordAnswer = @Answer " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "SET PasswordQuestion=@Question, PasswordAnswer=@Answer " +
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@Question", newPasswordQuestion),
@@ -304,21 +304,21 @@ namespace SQLiteMembership
 
                         using (var cmd = con.CreateCommand())
                         {
-                            cmd.CommandText = @"INSERT INTO [aspnet_Users] (
-                                                    [ApplicationId],
-                                                    [UserId],
-                                                    [UserName],
-                                                    [LoweredUserName],
-                                                    [IsAnonymous],
-                                                    [LastActivityDate]
-                                                ) VALUES (
-                                                    @ApplicationId
-                                                    ,@UserId
-                                                    ,@UserName
-                                                    ,@LoweredUserName
-                                                    ,@IsAnonymous
-                                                    ,@LastActivityDate
-                                                )";
+                            cmd.CommandText = "INSERT INTO [aspnet_Users] (" +
+                                              "[ApplicationId]," +
+                                              "[UserId]," +
+                                              "[UserName]," +
+                                              "[LoweredUserName]," +
+                                              "[IsAnonymous]," +
+                                              "[LastActivityDate]" +
+                                              ") VALUES (" +
+                                              "@ApplicationId," +
+                                              "@UserId," +
+                                              "@UserName," +
+                                              "@LoweredUserName," +
+                                              "@IsAnonymous," +
+                                              "@LastActivityDate" +
+                                              ")";
                             cmd.Parameters.AddRange(new[]
                             {
                                 cmd.CreateParameter("@ApplicationId", _applicationId),
@@ -334,49 +334,49 @@ namespace SQLiteMembership
 
                         using (var cmd = con.CreateCommand())
                         {
-                            cmd.CommandText = @"INSERT INTO [aspnet_Membership] (
-                                                    [ApplicationId],
-                                                    [UserId],
-                                                    [Password],
-                                                    [PasswordFormat],
-                                                    [PasswordSalt],
-                                                    [Email],
-                                                    [LoweredEmail],
-                                                    [PasswordQuestion],
-                                                    [PasswordAnswer],
-                                                    [IsApproved],
-                                                    [IsLockedOut],
-                                                    [CreateDate],
-                                                    [LastLoginDate],
-                                                    [LastPasswordChangedDate],
-                                                    [LastLockoutDate],
-                                                    [FailedPasswordAttemptCount],
-                                                    [FailedPasswordAttemptWindowStart],
-                                                    [FailedPasswordAnswerAttemptCount],
-                                                    [FailedPasswordAnswerAttemptWindowStart],
-                                                    [Comment]
-                                                ) VALUES (
-                                                    @ApplicationId,
-                                                    @UserId,
-                                                    @Password,
-                                                    @PasswordFormat,
-                                                    @PasswordSalt,
-                                                    @Email,
-                                                    @LoweredEmail,
-                                                    @PasswordQuestion,
-                                                    @PasswordAnswer,
-                                                    @IsApproved,
-                                                    @IsLockedOut,
-                                                    @CreateDate,
-                                                    @LastLoginDate,
-                                                    @LastPasswordChangedDate,
-                                                    @LastLockoutDate,
-                                                    @FailedPasswordAttemptCount,
-                                                    @FailedPasswordAttemptWindowStart,
-                                                    @FailedPasswordAnswerAttemptCount,
-                                                    @FailedPasswordAnswerAttemptWindowStart,
-                                                    @Comment
-                                                )";
+                            cmd.CommandText = "INSERT INTO [aspnet_Membership] (" +
+                                              "[ApplicationId], " +
+                                              "[UserId]," +
+                                              "[Password]," +
+                                              "[PasswordFormat]," +
+                                              "[PasswordSalt]," +
+                                              "[Email]," +
+                                              "[LoweredEmail]," +
+                                              "[PasswordQuestion]," +
+                                              "[PasswordAnswer]," +
+                                              "[IsApproved]," +
+                                              "[IsLockedOut]," +
+                                              "[CreateDate]," +
+                                              "[LastLoginDate]," +
+                                              "[LastPasswordChangedDate]," +
+                                              "[LastLockoutDate]," +
+                                              "[FailedPasswordAttemptCount]," +
+                                              "[FailedPasswordAttemptWindowStart]," +
+                                              "[FailedPasswordAnswerAttemptCount]," +
+                                              "[FailedPasswordAnswerAttemptWindowStart]," +
+                                              "[Comment]" +
+                                              ") VALUES (" +
+                                              "@ApplicationId," +
+                                              "@UserId," +
+                                              "@Password," +
+                                              "@PasswordFormat," +
+                                              "@PasswordSalt," +
+                                              "@Email," +
+                                              "@LoweredEmail," +
+                                              "@PasswordQuestion," +
+                                              "@PasswordAnswer," +
+                                              "@IsApproved," +
+                                              "@IsLockedOut," +
+                                              "@CreateDate," +
+                                              "@LastLoginDate," +
+                                              "@LastPasswordChangedDate," +
+                                              "@LastLockoutDate," +
+                                              "@FailedPasswordAttemptCount," +
+                                              "@FailedPasswordAttemptWindowStart," +
+                                              "@FailedPasswordAnswerAttemptCount," +
+                                              "@FailedPasswordAnswerAttemptWindowStart," +
+                                              "@Comment" +
+                                              ")";
                             cmd.Parameters.AddRange(new[]
                             {
                                 cmd.CreateParameter("@ApplicationId", _applicationId),
@@ -448,7 +448,7 @@ namespace SQLiteMembership
                         using (var cmd = con.CreateCommand())
                         {
                             cmd.CommandText = "DELETE FROM [aspnet_UsersInRoles] " +
-                                              "WHERE UserId = @UserId AND @ApplicationId = @ApplicationId";
+                                              "WHERE UserId=@UserId AND @ApplicationId=@ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
                                 cmd.CreateParameter("@UserId", userId),
@@ -461,7 +461,7 @@ namespace SQLiteMembership
                         using (var cmd = con.CreateCommand())
                         {
                             cmd.CommandText = "DELETE FROM [aspnet_Membership] " +
-                                              "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                              "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
                                 cmd.CreateParameter("@UserId", userId),
@@ -475,7 +475,8 @@ namespace SQLiteMembership
                         {
                             using (var cmd = con.CreateCommand())
                             {
-                                cmd.CommandText = "DELETE FROM aspnet_Profile WHERE UserId = @userId";
+                                cmd.CommandText = "DELETE FROM [aspnet_Profile] " +
+                                                  "WHERE UserId=@userId";
                                 cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
                                 rowsAffected += cmd.ExecuteNonQuery();
@@ -485,7 +486,7 @@ namespace SQLiteMembership
                         using (var cmd = con.CreateCommand())
                         {
                             cmd.CommandText = "DELETE FROM [aspnet_Users] " +
-                                              "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                              "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                             cmd.Parameters.AddRange(new[]
                             {
                                 cmd.CreateParameter("@UserId", userId),
@@ -524,8 +525,9 @@ namespace SQLiteMembership
 
                     using (var cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT Count(*) FROM [aspnet_Membership] " +
-                                          "WHERE Email LIKE @EmailSearch AND ApplicationId = @ApplicationId";
+                        cmd.CommandText = "SELECT Count(*) " +
+                                          "FROM [aspnet_Membership] " +
+                                          "WHERE Email LIKE @EmailSearch AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@EmailSearch", emailToMatch),
@@ -541,13 +543,11 @@ namespace SQLiteMembership
                     using(var cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT [aspnet_Membership].UserId, [aspnet_Users].Username, Email, PasswordQuestion," +
-                            " Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate," +
-                            " LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
-                            " FROM [aspnet_Membership], [aspnet_Users] " +
-                            " WHERE Email LIKE @EmailSearch AND [aspnet_Membership].ApplicationId = @ApplicationId " +
-                            " AND [aspnet_Membership].UserId = [aspnet_Users].UserId " +
-                            " ORDER BY [aspnet_Users].Username Asc LIMIT @PageSize OFFSET @PageStart";
+                            "SELECT m.UserId, u.Username, Email, PasswordQuestion, Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate, LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
+                            "FROM [aspnet_Membership] m, [aspnet_Users] u " +
+                            "WHERE Email LIKE @EmailSearch AND m.ApplicationId=@ApplicationId AND m.UserId = u.UserId " +
+                            "ORDER BY u.Username Asc " +
+                            "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@EmailSearch", emailToMatch),
@@ -591,8 +591,9 @@ namespace SQLiteMembership
 
                     using (var cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT Count(*) FROM [aspnet_Membership] " +
-                                          "WHERE Email LIKE @UsernameSearch AND ApplicationId = @ApplicationId";
+                        cmd.CommandText = "SELECT Count(*) " +
+                                          "FROM [aspnet_Membership] " +
+                                          "WHERE Email LIKE @UsernameSearch AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@UsernameSearch", usernameToMatch),
@@ -608,13 +609,11 @@ namespace SQLiteMembership
                     using(var cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT [aspnet_Membership].UserId, [aspnet_Users].Username, Email, PasswordQuestion," +
-                            " Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate," +
-                            " LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
-                            " FROM [aspnet_Membership], [aspnet_Users] " +
-                            " WHERE [aspnet_Users].Username LIKE @UsernameSearch AND [aspnet_Membership].ApplicationId = @ApplicationId " +
-                            " AND [aspnet_Membership].UserId = [aspnet_Users].UserId " +
-                            " ORDER BY [aspnet_Users].Username Asc LIMIT @PageSize OFFSET @PageStart";
+                            "SELECT m.UserId, u.Username, Email, PasswordQuestion, Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate, LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
+                            "FROM [aspnet_Membership] m, [aspnet_Users] u " +
+                            "WHERE u.Username LIKE @UsernameSearch ANDm.ApplicationId=@ApplicationId AND m.UserId = u.UserId " +
+                            "ORDER BY u.Username Asc " +
+                            "LIMIT @PageSize OFFSET @PageStart";
 
                         cmd.Parameters.AddRange(new[]
                         {
@@ -660,7 +659,7 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT Count(*) FROM [aspnet_Membership] " +
-                                          "WHERE ApplicationId = @ApplicationId";
+                                          "WHERE ApplicationId=@ApplicationId";
                         cmd.Parameters.Add(cmd.CreateParameter("@ApplicationId", _applicationId));
 
                         totalRecords = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
@@ -675,7 +674,7 @@ namespace SQLiteMembership
                                           " Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate," +
                                           " LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
                                           " FROM [aspnet_Membership], [aspnet_Users] " +
-                                          " WHERE [aspnet_Membership].ApplicationId = @ApplicationId " +
+                                          " WHERE [aspnet_Membership].ApplicationId=@ApplicationId " +
                                           " AND [aspnet_Membership].UserId = [aspnet_Users].UserId " +
                                           " ORDER BY Username Asc LIMIT @PageSize OFFSET @PageStart";
 
@@ -724,7 +723,7 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT Count(*) FROM [aspnet_Users] " +
-                                          "WHERE LastActivityDate > @CompareDate AND ApplicationId = @ApplicationId";
+                                          "WHERE LastActivityDate > @CompareDate AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@CompareDate", compareTime),
@@ -771,7 +770,7 @@ namespace SQLiteMembership
                     {
                         cmd.CommandText =
                             "SELECT Password, PasswordAnswer, PasswordSalt, IsLockedOut FROM [aspnet_Membership] " +
-                            "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                            "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@UserId", GetUserId(username)),
@@ -828,11 +827,9 @@ namespace SQLiteMembership
 
                     using (var cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT [aspnet_Membership].UserId, Username, Email, PasswordQuestion, " +
-                                          "Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate, " +
-                                          "LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
-                                          "FROM [aspnet_Membership], [aspnet_Users] " +
-                                          "WHERE Username = @Username AND [aspnet_Membership].ApplicationId = @ApplicationId AND [aspnet_Membership].UserId = [aspnet_Users].UserId";
+                        cmd.CommandText = "SELECT m.UserId, Username, Email, PasswordQuestion, Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate, LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
+                                          "FROM [aspnet_Membership] m, [aspnet_Users] u " +
+                                          "WHERE Username=@Username AND m.ApplicationId=@ApplicationId AND m.UserId = u.UserId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@Username", username),
@@ -856,8 +853,8 @@ namespace SQLiteMembership
                         using (var cmd = con.CreateCommand())
                         {
                             cmd.CommandText = "UPDATE [aspnet_Users] " +
-                                              "SET LastActivityDate = @LastActivityDate " +
-                                              "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                              "SET LastActivityDate=@LastActivityDate " +
+                                              "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                             cmd.Parameters.AddRange(new []
                             {
                                 cmd.CreateParameter("@LastActivityDate", DateTime.UtcNow),
@@ -895,11 +892,11 @@ namespace SQLiteMembership
 
                     using (var cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT [aspnet_Membership].UserId, Username, Email, PasswordQuestion, " +
+                        cmd.CommandText = "SELECT m.UserId, Username, Email, PasswordQuestion, " +
                                           "Comment, IsApproved, IsLockedOut, CreateDate, LastLoginDate, " +
                                           "LastActivityDate, LastPasswordChangedDate, LastLockoutDate " +
-                                          "FROM [aspnet_Membership], [aspnet_Users] " +
-                                          "WHERE [aspnet_Membership].UserId = @UserId AND [aspnet_Membership].UserId = [aspnet_Users].UserId";
+                                          "FROM [aspnet_Membership] m, [aspnet_Users] u " +
+                                          "WHERE m.UserId=@UserId AND m.UserId = u.UserId";
                         cmd.Parameters.Add(cmd.CreateParameter("@UserId", providerUserKey));
                         
                         using (var reader = cmd.ExecuteReader())
@@ -916,8 +913,8 @@ namespace SQLiteMembership
                         using (var cmd = con.CreateCommand())
                         {
                             cmd.CommandText = "UPDATE [aspnet_Users] " +
-                                              "SET LastActivityDate = @LastActivityDate " +
-                                              "WHERE UserId = @UserId";
+                                              "SET LastActivityDate=@LastActivityDate " +
+                                              "WHERE UserId=@UserId";
                             cmd.Parameters.AddRange(new []
                             {
                                 cmd.CreateParameter("@LastActivityDate", DateTime.UtcNow),
@@ -958,8 +955,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT Username " +
-                                          "FROM [aspnet_Users], [aspnet_Membership] " +
-                                          "WHERE Email = @Email AND [aspnet_Membership].ApplicationId = @ApplicationId AND [aspnet_Membership].UserId = [aspnet_Users].UserId ";
+                                          "FROM [aspnet_Users] u, [aspnet_Membership] m " +
+                                          "WHERE Email=@Email AND m.ApplicationId=@ApplicationId AND m.UserId = u.UserId ";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@Email", email),
@@ -1021,7 +1018,7 @@ namespace SQLiteMembership
                     {
                         cmd.CommandText = "SELECT PasswordAnswer, IsLockedOut " +
                                           "FROM [aspnet_Membership] " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@UserId", GetUserId(username)),
@@ -1050,8 +1047,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                          "SET Password = @Password, LastPasswordChangedDate = @LastPasswordChangedDate " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId AND IsLockedOut = 0";
+                                          "SET Password=@Password, LastPasswordChangedDate=@LastPasswordChangedDate " +
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId AND IsLockedOut = 0";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@Password", EncodePassword(newPassword, salt)),
@@ -1090,8 +1087,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                          "SET IsLockedOut = 0, LastLockoutDate = @LastLockedOutDate " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "SET IsLockedOut = 0, LastLockoutDate=@LastLockedOutDate " +
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@LastLockedOutDate", DateTime.UtcNow),
@@ -1137,8 +1134,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                          "SET Email = @Email, LoweredEmail = @LoweredEmail, Comment = @Comment, IsApproved = @IsApproved, LastLoginDate = @LastLoginDate " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "SET Email=@Email, LoweredEmail=@LoweredEmail, Comment=@Comment, IsApproved=@IsApproved, LastLoginDate=@LastLoginDate " +
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@Email", user.Email),
@@ -1185,7 +1182,7 @@ namespace SQLiteMembership
                     {
                         cmd.CommandText = "SELECT Password, PasswordSalt, IsApproved " +
                                           "FROM [aspnet_Membership] " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId AND IsLockedOut = 0";
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId AND IsLockedOut = 0";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@UserId", userId),
@@ -1216,8 +1213,8 @@ namespace SQLiteMembership
                             using (var cmd = con.CreateCommand())
                             {
                                 cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                  "SET LastLoginDate = @LastLoginDate " +
-                                                  "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                  "SET LastLoginDate=@LastLoginDate " +
+                                                  "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                                 cmd.Parameters.AddRange(new []
                                 {
                                     cmd.CreateParameter("@LastLoginDate", DateTime.UtcNow),
@@ -1296,12 +1293,9 @@ namespace SQLiteMembership
 
                     using (var cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT FailedPasswordAttemptCount, " +
-                                          "FailedPasswordAttemptWindowStart, " +
-                                          "FailedPasswordAnswerAttemptCount, " +
-                                          "FailedPasswordAnswerAttemptWindowStart " +
+                        cmd.CommandText = "SELECT FailedPasswordAttemptCount, FailedPasswordAttemptWindowStart, FailedPasswordAnswerAttemptCount, FailedPasswordAnswerAttemptWindowStart " +
                                           "FROM [aspnet_Membership] " +
-                                          "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                          "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@UserId", userId),
@@ -1346,13 +1340,13 @@ namespace SQLiteMembership
 
                             if (failureType == "password")
                                 cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                  "SET FailedPasswordAttemptCount = @Count, FailedPasswordAttemptWindowStart = @WindowStart " +
-                                                  "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                  "SET FailedPasswordAttemptCount=@Count, FailedPasswordAttemptWindowStart=@WindowStart " +
+                                                  "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
 
                             if (failureType == "passwordAnswer")
                                 cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                  "SET FailedPasswordAnswerAttemptCount = @Count, FailedPasswordAnswerAttemptWindowStart = @WindowStart " +
-                                                  "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                  "SET FailedPasswordAnswerAttemptCount=@Count, FailedPasswordAnswerAttemptWindowStart=@WindowStart " +
+                                                  "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
 
                             cmd.Parameters.AddRange(new[]
                             {
@@ -1373,8 +1367,8 @@ namespace SQLiteMembership
                                 // Lock out the user.
 
                                 cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                  "SET IsLockedOut = @IsLockedOut, LastLockoutDate = @LastLockedOutDate " +
-                                                  "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                  "SET IsLockedOut=@IsLockedOut, LastLockoutDate=@LastLockedOutDate " +
+                                                  "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
 
                                 cmd.Parameters.AddRange(new[]
                                 {
@@ -1395,13 +1389,13 @@ namespace SQLiteMembership
 
                                 if (failureType == "password")
                                     cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                      "SET FailedPasswordAttemptCount = @Count " +
-                                                      "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                      "SET FailedPasswordAttemptCount=@Count " +
+                                                      "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
 
                                 if (failureType == "passwordAnswer")
                                     cmd.CommandText = "UPDATE [aspnet_Membership] " +
-                                                      "SET FailedPasswordAnswerAttemptCount = @Count " +
-                                                      "WHERE UserId = @UserId AND ApplicationId = @ApplicationId";
+                                                      "SET FailedPasswordAnswerAttemptCount=@Count " +
+                                                      "WHERE UserId=@UserId AND ApplicationId=@ApplicationId";
 
                                 cmd.Parameters.AddRange(new []
                                 {
@@ -1458,8 +1452,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT UserId " +
-                                          "FROM  aspnet_Users " +
-                                          "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId = @ApplicationId";
+                                          "FROM [aspnet_Users] " +
+                                          "WHERE LOWER(@UserName) = LoweredUserName AND ApplicationId=@ApplicationId";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@UserName", userName),
@@ -1493,8 +1487,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT PasswordSalt " +
-                                          "FROM aspnet_Membership " +
-                                          "WHERE ApplicationId = @ApplicationId AND UserId = @UserId";
+                                          "FROM [aspnet_Membership] " +
+                                          "WHERE ApplicationId=@ApplicationId AND UserId=@UserId";
                         cmd.Parameters.AddRange(new[]
                         {
                             cmd.CreateParameter("@ApplicationId", _applicationId),

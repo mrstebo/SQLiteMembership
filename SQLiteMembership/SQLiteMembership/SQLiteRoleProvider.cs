@@ -62,8 +62,8 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "SELECT COUNT(*) " +
-                                          "FROM [aspnet_UsersInRoles], [aspnet_Users], [aspnet_Roles] " +
-                                          "WHERE [aspnet_UsersInRoles].UserId = [aspnet_Users].UserId AND [aspnet_UsersInRoles].RoleId = aspnet_Roles.RoleId AND [aspnet_Users].UserName = @UserName AND [aspnet_Roles].RoleName = @RoleName";
+                                          "FROM [aspnet_UsersInRoles] ur, [aspnet_Users] u, [aspnet_Roles] r " +
+                                          "WHERE ur.UserId = u.UserId AND ur.RoleId = ar.RoleId AND u.UserName = @UserName AND r.RoleName = @RoleName";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@UserName", username),
@@ -144,7 +144,8 @@ namespace SQLiteMembership
                         cmd.CommandText = "INSERT INTO [aspnet_Roles] (" +
                                           "RoleName, LoweredRoleName, ApplicationId" +
                                           ") VALUES ( " +
-                                          "@Rolename, @LoweredRoleName, @ApplicationId)";
+                                          "@Rolename, @LoweredRoleName, @ApplicationId" +
+                                          ")";
                         cmd.Parameters.AddRange(new []
                         {
                             cmd.CreateParameter("@RoleName", roleName),
@@ -279,7 +280,8 @@ namespace SQLiteMembership
                             cmd.CommandText = "INSERT INTO [aspnet_UsersInRoles] (" +
                                               "UserId, RoleId" +
                                               ") VALUES (" +
-                                              "@UserId, @RoleId)";
+                                              "@UserId, @RoleId" +
+                                              ")";
 
                             foreach (var username in usernames)
                             {

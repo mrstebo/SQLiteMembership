@@ -117,7 +117,7 @@ namespace SQLiteMembership
                 using (var cmd = con.CreateCommand())
                 {
                     cmd.CommandText = "SELECT Count(UserId) " +
-                                      "FROM aspnet_Users " +
+                                      "FROM [aspnet_Users]" +
                                       "WHERE ApplicationId = @ApplicationId AND LoweredUserName = LOWER(@UserName)";
                     cmd.Parameters.AddRange(new[]
                     {
@@ -197,7 +197,7 @@ namespace SQLiteMembership
                 using (var cmd = con.CreateCommand())
                 {
                     cmd.CommandText = "SELECT COUNT(UserId) " +
-                                      "FROM aspnet_Profile " +
+                                      "FROM [aspnet_Profile]" +
                                       "WHERE UserId = @UserId";
                     cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
@@ -447,10 +447,10 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT aspnet_Users.UserName, aspnet_Users.IsAnonymous, aspnet_Users.LastActivityDate, aspnet_Profile.LastUpdatedDate, DATALENGTH(aspnet_Profile.PropertyNames) + DATALENGTH(aspnet_Profile.PropertyValuesString) + DATALENGTH(aspnet_Profile.PropertyValuesBinary) " +
-                            "FROM aspnet_Users, aspnet_Profile " +
-                            "WHERE aspnet_Users.UserId = aspnet_Profile.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) " +
-                            "ORDER BY aspnet_Users.UserName Asc " +
+                            "SELECT u.UserName, u.IsAnonymous, u.LastActivityDate, p.LastUpdatedDate, DATALENGTH(p.PropertyNames) + DATALENGTH(p.PropertyValuesString) + DATALENGTH(p.PropertyValuesBinary) " +
+                            "FROM [aspnet_Users] u, [aspnet_Profile] p " +
+                            "WHERE u.UserId = p.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) " +
+                            "ORDER BY u.UserName Asc " +
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new []
                         {
@@ -505,7 +505,7 @@ namespace SQLiteMembership
                     {
                         cmd.CommandText =
                             "SELECT aspnet_Users.UserName, aspnet_Users.IsAnonymous, aspnet_Users.LastActivityDate, aspnet_Profile.LastUpdatedDate, DATALENGTH(aspnet_Profile.PropertyNames) + DATALENGTH(aspnet_Profile.PropertyValuesString) + DATALENGTH(aspnet_Profile.PropertyValuesBinary) " +
-                            "FROM aspnet_Users, aspnet_Profile " +
+                            "FROM aspnet_Users,[aspnet_Profile] " +
                             "WHERE aspnet_Users.UserId = aspnet_Profile.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) AND (@InactiveSinceDate IS NULL OR aspnet_Users.LastActivityDate <= @InactiveSinceDate) " +
                             "ORDER BY aspnet_Users.UserName Asc " +
                             "LIMIT @PageSize OFFSET @PageStart";
@@ -563,10 +563,10 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT aspnet_Users.UserName, aspnet_Users.IsAnonymous, aspnet_Users.LastActivityDate, aspnet_Profile.LastUpdatedDate, DATALENGTH(aspnet_Profile.PropertyNames) + DATALENGTH(aspnet_Profile.PropertyValuesString) + DATALENGTH(aspnet_Profile.PropertyValuesBinary) " +
-                            "FROM aspnet_Users, aspnet_Profile " +
-                            "WHERE aspnet_Users.UserId = aspnet_Profile.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) AND (@UserNameToMatch IS NULL OR LoweredUserName LIKE LOWER(@UserNameToMatch)) " +
-                            "ORDER BY aspnet_Users.UserName Asc " +
+                            "SELECT u.UserName, u.IsAnonymous, u.LastActivityDate, p.LastUpdatedDate, DATALENGTH(p.PropertyNames) + DATALENGTH(p.PropertyValuesString) + DATALENGTH(p.PropertyValuesBinary) " +
+                            "FROM [aspnet_Users] u, [aspnet_Profile] p " +
+                            "WHERE u.UserId = p.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) AND (@UserNameToMatch IS NULL OR LoweredUserName LIKE LOWER(@UserNameToMatch)) " +
+                            "ORDER BY u.UserName Asc " +
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new[]
                         {
@@ -622,10 +622,10 @@ namespace SQLiteMembership
                     using (var cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT aspnet_Users.UserName, aspnet_Users.IsAnonymous, aspnet_Users.LastActivityDate, aspnet_Profile.LastUpdatedDate, DATALENGTH(aspnet_Profile.PropertyNames) + DATALENGTH(aspnet_Profile.PropertyValuesString) + DATALENGTH(aspnet_Profile.PropertyValuesBinary) " +
-                            "FROM aspnet_Users, aspnet_Profile " +
-                            "WHERE aspnet_Users.UserId = aspnet_Profile.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) AND (@InactiveSinceDate IS NULL OR aspnet_Users.LastActivityDate <= @InactiveSinceDate) AND (@UserNameToMatch IS NULL OR LoweredUserName LIKE LOWER(@UserNameToMatch))" +
-                            "ORDER BY aspnet_Users.UserName Asc " +
+                            "SELECT u.UserName, u.IsAnonymous, u.LastActivityDate, p.LastUpdatedDate, DATALENGTH(p.PropertyNames) + DATALENGTH(p.PropertyValuesString) + DATALENGTH(p.PropertyValuesBinary) " +
+                            "FROM [aspnet_Users] u,[aspnet_Profile] r " +
+                            "WHERE u.UserId = p.UserId AND ApplicationId = @ApplicationId AND (@ProfileAuthOptions = 2 OR (@ProfileAuthOptions = 0 AND IsAnonymous = 1) OR (@ProfileAuthOptions = 1 AND IsAnonymous = 0)) AND (@InactiveSinceDate IS NULL OR aspnet_Users.LastActivityDate <= @InactiveSinceDate) AND (@UserNameToMatch IS NULL OR LoweredUserName LIKE LOWER(@UserNameToMatch)) " +
+                            "ORDER BY u.UserName Asc " +
                             "LIMIT @PageSize OFFSET @PageStart";
                         cmd.Parameters.AddRange(new[]
                         {
@@ -730,7 +730,7 @@ namespace SQLiteMembership
                 using (var cmd = con.CreateCommand())
                 {
                     cmd.CommandText = "SELECT PropertyNames, PropertyValuesString, PropertyValuesBinary " +
-                                      "FROM aspnet_Profile " +
+                                      "FROM [aspnet_Profile]" +
                                       "WHERE UserId = @UserId";
                     cmd.Parameters.Add(cmd.CreateParameter("@UserId", userId));
 
