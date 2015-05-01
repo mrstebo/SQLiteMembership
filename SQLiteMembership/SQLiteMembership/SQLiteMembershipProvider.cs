@@ -122,7 +122,7 @@ namespace SQLiteMembership
                     break;
 
                 case "Encrypted":
-                    _passwordFormat = MembershipPasswordFormat.Hashed;
+                    _passwordFormat = MembershipPasswordFormat.Encrypted;
                     break;
 
                 case "Clear":
@@ -800,7 +800,7 @@ namespace SQLiteMembership
                 }
 
                 if (PasswordFormat == MembershipPasswordFormat.Encrypted)
-                    password = UnEncodePassword(password);
+                    password = DecodePassword(password);
             }
             catch (SQLiteException ex)
             {
@@ -1430,7 +1430,7 @@ namespace SQLiteMembership
             switch (PasswordFormat)
             {
                 case MembershipPasswordFormat.Encrypted:
-                    pass2 = UnEncodePassword(dbpassword);
+                    pass2 = DecodePassword(dbpassword);
                     break;
 
                 case MembershipPasswordFormat.Hashed:
@@ -1548,7 +1548,7 @@ namespace SQLiteMembership
             return (encodedPassword.Length > 128) ? encodedPassword.Substring(0, 128) : encodedPassword;
         }
 
-        private string UnEncodePassword(string encodedPassword)
+        private string DecodePassword(string encodedPassword)
         {
             var password = encodedPassword;
 
@@ -1558,8 +1558,8 @@ namespace SQLiteMembership
                     break;
 
                 case MembershipPasswordFormat.Encrypted:
-                    byte[] allBytes = Convert.FromBase64String(password);
-                    byte[] decryptedBytes = DecryptPassword(allBytes);
+                    var allBytes = Convert.FromBase64String(password);
+                    var decryptedBytes = DecryptPassword(allBytes);
                     password = (decryptedBytes == null) ? null :
                         Encoding.Unicode.GetString(decryptedBytes, SaltLength, decryptedBytes.Length - SaltLength);
                     break;
