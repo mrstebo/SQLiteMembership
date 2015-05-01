@@ -24,7 +24,6 @@ namespace SQLiteMembership
         private string _passwordStrengthRegularExpression;
         private bool _requiresQuestionAndAnswer;
         private bool _requiresUniqueEmail;
-        private string _encryptionKey = "AE09F72BA97CBBB5EEAAFF";
         private string _connectionString;
         private string _applicationId;
 
@@ -113,7 +112,6 @@ namespace SQLiteMembership
             _passwordStrengthRegularExpression = config["passwordStrengthRegularExpression"].DefaultIfEmpty("");
             _requiresQuestionAndAnswer = Convert.ToBoolean(config["requiredQuestionAndAnswer"].DefaultIfEmpty("false"));
             _requiresUniqueEmail = Convert.ToBoolean(config["requiresUniqueEmail"].DefaultIfEmpty("true"));
-            _encryptionKey = config["encryptionKey"].DefaultIfEmpty(_encryptionKey);
 
             switch (config["passwordFormat"].DefaultIfEmpty("Hashed"))
             {
