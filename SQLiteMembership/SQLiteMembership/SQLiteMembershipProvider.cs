@@ -193,7 +193,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "ChangePassword");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return rowsAffected > 0;
@@ -238,7 +238,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "ChangePasswordQuestionAndAnswer");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return rowsAffected > 0;
@@ -505,7 +505,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "DeleteUser");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return rowsAffected > 0;
@@ -571,7 +571,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "FindUsersByEmail");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return users;
@@ -638,7 +638,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "FindUsersByName");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return users;
@@ -700,7 +700,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetAllUsers");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return users;
@@ -739,7 +739,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetNumberOfUsersOnline");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return numUsersOnline;
@@ -807,7 +807,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetPassword");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return password;
@@ -872,7 +872,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetUser(String, Boolean)");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return membershipUser;
@@ -931,7 +931,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetUser(Object, Boolean)");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return membershipUser;
@@ -974,7 +974,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetUserNameByEmail");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return username;
@@ -1068,7 +1068,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "ResetPassword");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
         }
 
@@ -1105,7 +1105,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "UnlockUser");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
 
             return rowsAffected > 0;
@@ -1156,7 +1156,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "UpdateUser");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
         }
 
@@ -1233,7 +1233,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "ValidateUser");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
             return isValid;
         }
@@ -1416,7 +1416,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "UpdateFailureCount");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
         }
 
@@ -1504,7 +1504,7 @@ namespace SQLiteMembership
 
                 EventLogger.WriteToEventLog(ex, "GetSaltForUser");
 
-                throw new ProviderException(EventLogger.GenericExceptionMessage);
+                throw new ProviderException(Constants.GenericExceptionMessage);
             }
         }
 
