@@ -45,6 +45,7 @@ namespace SQLiteMembership
 
             _connectionString = connectionStringSettings.ConnectionString;
 
+            WriteExceptionsToEventLog = Convert.ToBoolean(config["writeExceptionsToEventLog"].DefaultIfEmpty("true"));
             ApplicationName = config["applicationName"].DefaultIfEmpty(HostingEnvironment.ApplicationVirtualPath);
 
             SQLiteMembershipUtils.CreateDatabaseIfRequired(_connectionString, ApplicationName);
@@ -538,9 +539,9 @@ namespace SQLiteMembership
             }
             catch (SQLiteException ex)
             {
-                if (WriteExceptionsToEventLog)
-                    EventLogger.WriteToEventLog(ex, "GetAllInactiveProfiles");
-                throw;
+                if (!WriteExceptionsToEventLog)
+                    throw;
+                EventLogger.WriteToEventLog(ex, "GetAllInactiveProfiles");
             }
 
             return results;
@@ -597,9 +598,9 @@ namespace SQLiteMembership
             }
             catch (SQLiteException ex)
             {
-                if (WriteExceptionsToEventLog)
-                    EventLogger.WriteToEventLog(ex, "FindProfilesByUserName");
-                throw;
+                if (!WriteExceptionsToEventLog)
+                    throw;
+                EventLogger.WriteToEventLog(ex, "FindProfilesByUserName");
             }
 
             return results;
@@ -657,9 +658,9 @@ namespace SQLiteMembership
             }
             catch (SQLiteException ex)
             {
-                if (WriteExceptionsToEventLog)
-                    EventLogger.WriteToEventLog(ex, "FindInactiveProfilesByUserName");
-                throw;
+                if (!WriteExceptionsToEventLog)
+                    throw;
+                EventLogger.WriteToEventLog(ex, "FindInactiveProfilesByUserName");
             }
 
             return results;
